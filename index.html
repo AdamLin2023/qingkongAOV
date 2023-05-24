@@ -42,7 +42,14 @@
 </head>
 <body>
 <h1>Excel行查找</h1>
-<input type="text" id="searchInput" placeholder="輸入要查找的值">
+<select id="searchInput">
+  <option value="">請選擇</option>
+  <option value="射">射</option>
+  <option value="野">野</option>
+  <option value="中">中</option>
+  <option value="凱">凱</option>
+  <option value="輔">輔</option>
+</select>
 <button onclick="searchRows()">查找</button>
 <table id="resultTable"></table>
 
@@ -50,6 +57,10 @@
   function searchRows() {
     var searchInput = document.getElementById('searchInput');
     var searchValue = searchInput.value.trim();
+
+    if(searchValue === ""){
+      alert('請選擇要查的玩家位置');
+    }
 
     var url = window.location.href;
     var folderPath = url.substring(0, url.lastIndexOf('/') + 1);
