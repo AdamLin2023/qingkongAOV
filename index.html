@@ -66,7 +66,7 @@
       <option value="輔">輔</option>
     </select>
   </div>
-  <button type="button" onclick="searchRows()" class="btn btn-success form-control">Search</button>
+  <button type="button" onclick="searchRows()" class="btn btn-success form-control">篩選</button>
 </div>
 <div class="container" style="overflow-x: scroll">
   <table id="resultTable" class="table table-bordered table-striped" style="width: 700px; max-width: inherit;">
@@ -90,9 +90,9 @@
       "bFilter": true,
       "bInfo": false,
       "bAutoWidth": false,
-      "searching": false,
       'language':{
-        'sEmptyTable': "目前沒資料"
+        'sEmptyTable': "目前沒資料",
+        'sSearch': "搜尋特定字詞"
       }
     });
   });
@@ -199,9 +199,9 @@
       "bFilter": true,
       "bInfo": false,
       "bAutoWidth": false,
-      "searching": false,
       'language':{
-        'sEmptyTable': "目前沒資料"
+        'sEmptyTable': "目前沒資料",
+        'sSearch': "搜尋特定字詞"
       }
     });
   }
