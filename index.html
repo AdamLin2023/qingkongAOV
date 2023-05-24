@@ -159,6 +159,14 @@
               var dataCell = document.createElement('td');
               dataCell.textContent = filteredData[j][k];
 
+              if(k === 0){
+                var userid = (j*8+k).toString();
+                dataCell.setAttribute('id', "userid_"+userid);
+                dataCell.setAttribute('class', "clickCopy");
+                dataCell.setAttribute('data-id', "userid_"+userid);
+                dataCell.setAttribute('onclick', "copyText('userid_"+userid+"')");
+              }
+
               if(k === 1){
                 var userid = (j*8+k).toString();
                 dataCell.setAttribute('id', "lineid_"+userid);
