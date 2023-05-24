@@ -85,7 +85,11 @@
 
   $(document).ready(function(){
     $(".clickCopy").on('click', function(){
+
+      console.log("here");
       var lineid = $(this).data('id');
+
+      console.log(lineid);
       copyText(lineid);
     });
 
