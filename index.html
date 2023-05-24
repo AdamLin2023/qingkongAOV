@@ -63,7 +63,10 @@
   <button type="button" onclick="searchRows()" class="btn btn-success form-control">Search</button>
 </div>
 <div class="container" style="overflow-x: scroll">
-  <table id="resultTable" class="table table-striped" style="width: 500px; max-width: inherit;"></table>
+  <table id="resultTable" class="table table-striped" style="width: 500px; max-width: inherit;">
+<!--    <tr><th>Line名</th><th>遊戲名字</th><th>擅射</th><th>擅野</th><th>擅中</th><th>擅凱</th><th>擅輔</th><th>段位</th></tr>-->
+<!--    <tr><td>乙瑆</td><td id="lineid_9" class="clickCopy" data-id="lineid_9">瑆☻</td><td>射</td><td>野</td><td></td><td></td><td></td><td>S</td></tr>-->
+  </table>
 </div>
 
 <script>
@@ -81,6 +84,7 @@
 
     if(searchValue === ""){
       alert('請選擇要查的玩家位置');
+      return;
     }
 
     var url = window.location.href;
@@ -151,7 +155,13 @@
     // Get the text field
     var copyText = document.getElementById(id);
     // Copy the text inside the text field
-    navigator.clipboard.writeText(copyText.textContent);
+    // navigator.clipboard.writeText(copyText.textContent);
+
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val(copyText.textContent).select();
+    document.execCommand("copy");
+    $temp.remove();
 
     // Alert the copied text
     alert("名字已複製 " + copyText.textContent);
