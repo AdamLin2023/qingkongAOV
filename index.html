@@ -164,6 +164,7 @@
                 dataCell.setAttribute('id', "lineid_"+userid);
                 dataCell.setAttribute('class', "clickCopy");
                 dataCell.setAttribute('data-id', "lineid_"+userid);
+                dataCell.setAttribute('onclick', "copyText('lineid_"+userid+"')");
               }
               dataRow.appendChild(dataCell);
             }
