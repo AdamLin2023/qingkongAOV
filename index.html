@@ -111,6 +111,10 @@
       return;
     }
 
+    $("#resultTable").DataTable().clear();
+    $("#resultTable").DataTable().draw();
+    $("#resultTable").DataTable().destroy();
+
     var url = window.location.href;
     var folderPath = url.substring(0, url.lastIndexOf('/') + 1);
 
@@ -175,6 +179,18 @@
     xhr.open('GET', folderPath + 'excel-data.xlsx', true); // 將 'example.xlsx' 替換為實際的Excel檔案名稱
     xhr.responseType = 'arraybuffer';
     xhr.send();
+
+    $("#resultTable").DataTable({
+      "bPaginate": false,
+      "bLengthChange": false,
+      "bFilter": true,
+      "bInfo": false,
+      "bAutoWidth": false,
+      "searching": false,
+      'language':{
+        'sEmptyTable': "目前沒資料"
+      }
+    });
   }
 
   function copyText(id) {
