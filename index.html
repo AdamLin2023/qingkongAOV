@@ -46,19 +46,21 @@
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 </head>
 <body>
-<h1>晴空爬分隊友搜尋</h1>
-<div class="form-group">
-  <label>選擇你想找的隊友路線:</label>
-  <select class="form-control" id="searchInput">
-    <option value="">請選擇</option>
-    <option value="射">射</option>
-    <option value="野">野</option>
-    <option value="中">中</option>
-    <option value="凱">凱</option>
-    <option value="輔">輔</option>
-  </select>
+<div class="container">
+  <h1>晴空爬分隊友搜尋</h1>
+  <div class="form-group">
+    <label>選擇你想找的隊友路線:</label>
+    <select class="form-control" id="searchInput">
+      <option value="">請選擇</option>
+      <option value="射">射</option>
+      <option value="野">野</option>
+      <option value="中">中</option>
+      <option value="凱">凱</option>
+      <option value="輔">輔</option>
+    </select>
+  </div>
+  <button type="button" onclick="searchRows()" class="btn btn-success form-control">Search</button>
 </div>
-<button type="button" onclick="searchRows()" class="btn btn-success form-control">Search</button>
 <div class="container">
   <table id="resultTable" class="table table-striped"></table>
 </div>
@@ -138,11 +140,6 @@
   function copyText(id) {
     // Get the text field
     var copyText = document.getElementById(id);
-
-    // Select the text field
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); // For mobile devices
-
     // Copy the text inside the text field
     navigator.clipboard.writeText(copyText.value);
 
