@@ -84,7 +84,7 @@
 <script>
 
   $(document).ready(function(){
-    $(".clickCopy").click(function(){
+    $(".clickCopy").on('click', function(){
       var lineid = $(this).data('id');
       copyText(lineid);
     });
