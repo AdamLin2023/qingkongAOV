@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Excel行查找</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    h1 {
+      color: #333333;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #cccccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #cccccc;
+    }
+  </style>
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+<h1>Excel行查找</h1>
+<input type="text" id="searchInput" placeholder="輸入要查找的值">
+<button onclick="searchRows()">查找</button>
+<table id="resultTable"></table>
+
+<script>
+  function searchRows() {
+    var searchInput = document.getElementById('searchInput');
+    var searchValue = searchInput.value.trim();
+
+    var url = window.location.href;
+    var folderPath = url.substring(0, url.lastIndexOf('/') + 1);
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var data = new Uint8Array(xhr.response);
+        var workbook = XLSX.read(data, { type: 'array' });
+
+        var sheetName = workbook.SheetNames[0];
+        var worksheet = workbook.Sheets[sheetName];
+
+        var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+        var filteredData = jsonData.filter(function(row) {
+          return row.some(function(cell) {
+            return cell.toString().includes(searchValue);
+          });
+        });
+
+        var resultTable = document.getElementById('resultTable');
+        resultTable.innerHTML = '';
+
+        if (filteredData.length > 0) {
+          var headerRow = document.createElement('tr');
+          for (var i = 0; i < filteredData[0].length; i++) {
+            var headerCell = document.createElement('th');
+            headerCell.textContent = 'Column ' + (i + 1);
+            headerRow.appendChild(headerCell);
+          }
+          resultTable.appendChild(headerRow);
+
+          for (var j = 0; j < filteredData.length; j++) {
+            var dataRow = document.createElement('tr');
+            for (var k = 0; k < filteredData[j].length; k++) {
+              var dataCell = document.createElement('td');
+              dataCell.textContent = filteredData[j][k];
+              dataRow.appendChild(dataCell);
+            }
+            resultTable.appendChild(dataRow);
+          }
+        } else {
+          var noResultsRow = document.createElement('tr');
+          var noResultsCell = document.createElement('td');
+          noResultsCell.setAttribute('colspan', jsonData[0].length);
+          noResultsCell.textContent = '找不到符合條件的行';
+          noResultsRow.appendChild(noResultsCell);
+          resultTable.appendChild(noResultsRow);
+        }
+      }
+    };
+
+    xhr.open('GET', folderPath + 'excel-data.xlsx', true); // 將 'example.xlsx' 替換為實際的Excel檔案名稱
+    xhr.responseType = 'arraybuffer';
+    xhr.send();
+  }
+</script>
+</body>
+</html>
