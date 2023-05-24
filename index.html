@@ -47,7 +47,7 @@
 </head>
 <body>
 <div class="container text-center">
-  <h1>晴空萬里不如有妳</h1>
+  <h1 style="font-size: x-large">晴空萬里不如有妳</h1>
   <p>排位隊友搜尋</p>
   <div class="form-group">
     <label>選擇你想找的隊友路線:</label>
@@ -67,6 +67,14 @@
 </div>
 
 <script>
+
+  $(document).ready(function(){
+    $(".clickCopy").click(function(){
+      var lineid = $(this).data('id');
+      copyText(lineid);
+    });
+  });
+
   function searchRows() {
     var searchInput = document.getElementById('searchInput');
     var searchValue = searchInput.value.trim();
@@ -115,8 +123,9 @@
 
               if(k === 1){
                 var userid = (j*8+k).toString();
-                dataCell.setAttribute('id', userid);
-                dataCell.onclick = function() { copyText(userid); };
+                dataCell.setAttribute('id', "lineid_"+userid);
+                dataCell.setAttribute('class', "clickCopy");
+                dataCell.setAttribute('data-id', "lineid_"+userid);
               }
               dataRow.appendChild(dataCell);
             }
