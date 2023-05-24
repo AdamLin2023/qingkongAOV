@@ -84,15 +84,6 @@
 <script>
 
   $(document).ready(function(){
-    $(".clickCopy").on('click', function(){
-
-      console.log("here");
-      var lineid = $(this).data('id');
-
-      console.log(lineid);
-      copyText(lineid);
-    });
-
     $("#resultTable").DataTable({
       "bPaginate": false,
       "bLengthChange": false,
@@ -104,6 +95,15 @@
         'sEmptyTable': "目前沒資料"
       }
     });
+  });
+
+  $(".clickCopy").on('click', function(){
+
+    console.log("here");
+    var lineid = $(this).data('id');
+
+    console.log(lineid);
+    copyText(lineid);
   });
 
   function searchRows() {
