@@ -74,9 +74,9 @@
       <tr><th>Line名</th><th>遊戲名字</th><th>擅射</th><th>擅野</th><th>擅中</th><th>擅凱</th><th>擅輔</th><th>段位</th></tr>
     </thead>
     <tbody id="resultBody">
-<!--      <tr><td>2瑆</td><td id="lineid_9" class="clickCopy" data-id="lineid_9">瑆☻</td><td>射</td><td>野</td><td></td><td></td><td></td><td>S</td></tr>-->
-<!--      <tr><td>1瑆</td><td id="lineid_9" class="clickCopy" data-id="lineid_9">瑆☻</td><td>射</td><td>野</td><td></td><td></td><td></td><td>S</td></tr>-->
-<!--      <tr><td>3瑆</td><td id="lineid_9" class="clickCopy" data-id="lineid_9">瑆☻</td><td>射</td><td>野</td><td></td><td></td><td></td><td>S</td></tr>-->
+      <tr><td>2瑆</td><td id="lineid_9" class="clickCopy" data-id="lineid_9">瑆☻</td><td>射</td><td>野</td><td></td><td></td><td></td><td>S</td></tr>
+      <tr><td>1瑆</td><td id="lineid_9" class="clickCopy" data-id="lineid_9">瑆☻</td><td>射</td><td>野</td><td></td><td></td><td></td><td>S</td></tr>
+      <tr><td>3瑆</td><td id="lineid_9" class="clickCopy" data-id="lineid_9">瑆☻</td><td>射</td><td>野</td><td></td><td></td><td></td><td>S</td></tr>
     </tbody>
   </table>
 </div>
@@ -175,6 +175,18 @@
     xhr.open('GET', folderPath + 'excel-data.xlsx', true); // 將 'example.xlsx' 替換為實際的Excel檔案名稱
     xhr.responseType = 'arraybuffer';
     xhr.send();
+
+    $("#resultTable").DataTable({
+      "bPaginate": false,
+      "bLengthChange": false,
+      "bFilter": true,
+      "bInfo": false,
+      "bAutoWidth": false,
+      "searching": false,
+      'language':{
+        'sEmptyTable': "目前沒資料"
+      }
+    });
   }
 
   function copyText(id) {
