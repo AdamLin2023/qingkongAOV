@@ -59,7 +59,9 @@
   </select>
 </div>
 <button type="button" onclick="searchRows()" class="btn btn-success form-control">Search</button>
-<table id="resultTable" class="table table-striped"></table>
+<div class="container">
+  <table id="resultTable" class="table table-striped"></table>
+</div>
 
 <script>
   function searchRows() {
@@ -107,6 +109,12 @@
             for (var k = 0; k < filteredData[j].length; k++) {
               var dataCell = document.createElement('td');
               dataCell.textContent = filteredData[j][k];
+
+              if(k === 1){
+                var userid = (j*8+k).toString();
+                dataCell.setAttribute('id', userid);
+                dataCell.onclick = function() { copyText(userid); };
+              }
               dataRow.appendChild(dataCell);
             }
             resultTable.appendChild(dataRow);
@@ -125,6 +133,21 @@
     xhr.open('GET', folderPath + 'excel-data.xlsx', true); // 將 'example.xlsx' 替換為實際的Excel檔案名稱
     xhr.responseType = 'arraybuffer';
     xhr.send();
+  }
+
+  function copyText(id) {
+    // Get the text field
+    var copyText = document.getElementById(id);
+
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText.value);
+
+    // Alert the copied text
+    alert("名字已複製 " + copyText.value);
   }
 </script>
 </body>
