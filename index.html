@@ -4,9 +4,14 @@
   <title>晴空萬里不如有妳</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,500" rel="stylesheet"/>
+
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -44,6 +49,7 @@
     }
   </style>
   <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+
 </head>
 <body>
 <div class="container text-center">
@@ -63,9 +69,15 @@
   <button type="button" onclick="searchRows()" class="btn btn-success form-control">Search</button>
 </div>
 <div class="container" style="overflow-x: scroll">
-  <table id="resultTable" class="table table-striped" style="width: 700px; max-width: inherit;">
-<!--    <tr><th>Line名</th><th>遊戲名字</th><th>擅射</th><th>擅野</th><th>擅中</th><th>擅凱</th><th>擅輔</th><th>段位</th></tr>-->
-<!--    <tr><td>乙瑆</td><td id="lineid_9" class="clickCopy" data-id="lineid_9">瑆☻</td><td>射</td><td>野</td><td></td><td></td><td></td><td>S</td></tr>-->
+  <table id="resultTable" class="table table-bordered table-striped" style="width: 700px; max-width: inherit;">
+    <thead id="resultHead">
+      <tr><th>Line名</th><th>遊戲名字</th><th>擅射</th><th>擅野</th><th>擅中</th><th>擅凱</th><th>擅輔</th><th>段位</th></tr>
+    </thead>
+    <tbody id="resultBody">
+      <tr><td>2瑆</td><td id="lineid_9" class="clickCopy" data-id="lineid_9">瑆☻</td><td>射</td><td>野</td><td></td><td></td><td></td><td>S</td></tr>
+      <tr><td>1瑆</td><td id="lineid_9" class="clickCopy" data-id="lineid_9">瑆☻</td><td>射</td><td>野</td><td></td><td></td><td></td><td>S</td></tr>
+      <tr><td>3瑆</td><td id="lineid_9" class="clickCopy" data-id="lineid_9">瑆☻</td><td>射</td><td>野</td><td></td><td></td><td></td><td>S</td></tr>
+    </tbody>
   </table>
 </div>
 
@@ -75,6 +87,15 @@
     $(".clickCopy").click(function(){
       var lineid = $(this).data('id');
       copyText(lineid);
+    });
+
+    $("#resultTable").DataTable({
+      "bPaginate": false,
+      "bLengthChange": false,
+      "bFilter": true,
+      "bInfo": false,
+      "bAutoWidth": false,
+      "searching": false,
     });
   });
 
@@ -107,8 +128,10 @@
           });
         });
 
-        var resultTable = document.getElementById('resultTable');
-        resultTable.innerHTML = '';
+        var resultHead = document.getElementById('resultHead');
+        resultHead.innerHTML = '';
+        var resultBody = document.getElementById('resultBody');
+        resultBody.innerHTML = '';
 
         if (filteredData.length > 0) {
           var headerRow = document.createElement('tr');
@@ -117,7 +140,7 @@
             headerCell.textContent = filteredData[0][i];
             headerRow.appendChild(headerCell);
           }
-          resultTable.appendChild(headerRow);
+          resultHead.appendChild(headerRow);
 
           for (var j = 1; j < filteredData.length; j++) {
             var dataRow = document.createElement('tr');
@@ -133,7 +156,7 @@
               }
               dataRow.appendChild(dataCell);
             }
-            resultTable.appendChild(dataRow);
+            resultBody.appendChild(dataRow);
           }
         } else {
           var noResultsRow = document.createElement('tr');
@@ -141,7 +164,7 @@
           noResultsCell.setAttribute('colspan', jsonData[0].length);
           noResultsCell.textContent = '找不到符合條件的行';
           noResultsRow.appendChild(noResultsCell);
-          resultTable.appendChild(noResultsRow);
+          resultHead.appendChild(noResultsRow);
         }
       }
     };
